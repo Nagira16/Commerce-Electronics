@@ -12,10 +12,10 @@ const Header = () => {
         </Link>
       </div>
       <nav className=" flex items-center space-x-6 mr-5">
-        <Link href={""}>
+        <Link href={"/products"}>
           <MonitorSmartphone />
         </Link>
-        <Link href={""}>
+        <Link href={"/cart"}>
           <ShoppingBag />
         </Link>
         <SearchForm />
