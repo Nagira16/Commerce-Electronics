@@ -1,3 +1,5 @@
+"use client";
+
 import { TabsContent } from "@radix-ui/react-tabs";
 import {
   Card,
@@ -12,19 +14,26 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
 const SignIn = () => {
-  const signInHandler = () => {};
+  const signInHandler = (formData: FormData) => {
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    console.log({ email, password });
+  };
+
   return (
     <TabsContent value="signIn">
       <Card>
-        <form>
+        <form action={signInHandler}>
           <CardHeader>
             <CardTitle>SignIn</CardTitle>
             <CardDescription>Sign In From Here !!</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="Email">Email</Label>
               <Input
+                name="email"
                 id="email"
                 placeholder="alex@example.com"
                 type="email"
@@ -34,7 +43,8 @@ const SignIn = () => {
             <div className="space-y-1">
               <Label htmlFor="Password">Password</Label>
               <Input
-                id="Password"
+                name="password"
+                id="password"
                 placeholder="********"
                 minLength={8}
                 type="password"

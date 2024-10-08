@@ -15,14 +15,14 @@ import { Button } from "../ui/button";
 import { signUp } from "@/actions/authAciton";
 
 const SignUp = () => {
-  const signUpHandler = (formData: FormData) => {
+  const signUpHandler = async (formData: FormData) => {
     const username = formData.get("username") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
     if (password !== confirmPassword) return alert("password doesn't match");
 
-    signUp(username, email, password);
+    await signUp(username, email, password);
   };
 
   return (
@@ -38,7 +38,7 @@ const SignUp = () => {
               <Label htmlFor="username">UserName</Label>
               <Input
                 name="username"
-                id="unsername"
+                id="username"
                 type="text"
                 placeholder="Alex"
                 minLength={2}
