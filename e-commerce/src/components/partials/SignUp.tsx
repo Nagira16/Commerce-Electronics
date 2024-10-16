@@ -13,16 +13,19 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { signUp } from "@/actions/authAciton";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const SignUp = () => {
-  const signUpHandler = async (formData: FormData) => {
-    const username = formData.get("username") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
-    if (password !== confirmPassword) return alert("password doesn't match");
+  const router: AppRouterInstance = useRouter();
 
-    await signUp(username, email, password);
+  const signUpHandler = async (formData: FormData) => {
+    const error: string | void = await signUp(formData);
+    if (error) {
+      alert(error);
+    } else {
+      router.push("/");
+    }
   };
 
   return (
