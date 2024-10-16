@@ -12,13 +12,19 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { signIn } from "@/actions/authAciton";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const SignIn = () => {
-  const signInHandler = (formData: FormData) => {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    console.log({ email, password });
+  const router: AppRouterInstance = useRouter();
+  const signInHandler = async (formData: FormData) => {
+    const error: string | void = await signIn(formData);
+    if (error) {
+      alert(error);
+    } else {
+      router.push("/");
+    }
   };
 
   return (
