@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ModeToggle } from "../partials/ModeToggle";
 import SearchForm from "../partials/SearchForm";
 import { MonitorSmartphone, ShoppingBag } from "lucide-react";
+import AuthButton from "../partials/AuthButton";
 
 const Header = () => {
   return (
@@ -20,6 +21,7 @@ const Header = () => {
         </Link>
         <SearchForm />
         <ModeToggle />
+        <AuthButton />
       </nav>
     </header>
   );

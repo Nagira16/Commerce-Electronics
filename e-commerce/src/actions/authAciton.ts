@@ -1,13 +1,19 @@
 "use server";
 
 import prisma from "@/lib/prismaClient";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { User } from "@prisma/client";
-import { AuthResponse } from "@supabase/supabase-js";
+import {
+  AuthResponse,
+  SupabaseClient,
+  User as UserType,
+} from "@supabase/supabase-js";
 import bcrypt from "bcrypt";
 
 export const signUp = async (formData: FormData): Promise<string | void> => {
   try {
+    const supabase: SupabaseClient = await createClient();
+
     const username = formData.get("username") as string;
     let email = formData.get("email") as string;
     const password = formData.get("password") as string;
@@ -40,6 +46,8 @@ export const signUp = async (formData: FormData): Promise<string | void> => {
 
 export const signIn = async (formData: FormData): Promise<string | void> => {
   try {
+    const supabase: SupabaseClient = await createClient();
+
     let email = formData.get("email") as string;
     const password = formData.get("password") as string;
     email = email.toLowerCase();
@@ -75,19 +83,33 @@ export const signIn = async (formData: FormData): Promise<string | void> => {
   }
 };
 
-export const checkUserSession = async () => {
+export const signOut = async (): Promise<void> => {
+  const supabase: SupabaseClient = await createClient();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("Sign-out error:", error.message);
+  } else {
+    console.log("Successfully signed out.");
+  }
+};
+
+export const checkUserSession = async (): Promise<UserType | null> => {
+  const supabase: SupabaseClient = await createClient();
+
   const {
-    data: { session },
+    data: { user },
     error,
-  } = await supabase.auth.getSession();
+  } = await supabase.auth.getUser();
 
   if (error) {
     console.error("Error fetching session:", error);
     return null;
   }
 
-  if (session) {
-    return session;
+  if (user) {
+    return user;
   } else {
     return null;
   }
