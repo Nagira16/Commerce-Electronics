@@ -2,18 +2,20 @@
 
 import { FormReturnType } from "@/types";
 import { User } from "@prisma/client";
-import { uploadFile } from "./fileUpload";
-import { getUserByEmail, getUserByUsername } from "./user";
-import prisma from "@/lib/prisma";
-import { supabase } from "@/lib/supabase";
+import { uploadFile } from "../../../actions/fileUpload";
+import { getUserByEmail, getUserByUsername } from "../../../actions/user";
+import prisma from "@/utils/prisma/prisma";
 import { AuthResponse } from "@supabase/supabase-js";
 import bcrypt from "bcrypt";
+import { createClient } from "@/utils/supabase/server";
 
 export const SignUpWithEmail = async (
   prevState: any,
   formData: FormData
 ): Promise<FormReturnType<null>> => {
   try {
+    const supabase = await createClient();
+
     const username = formData.get("username") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;

@@ -1,7 +1,7 @@
 "use client";
 
-import { SignUpWithEmail } from "@/actions/auth";
-import { useActionState, useEffect, useState } from "react";
+import { SignUpWithEmail } from "@/app/auth/sign-up/action";
+import { useActionState, useEffect } from "react";
 import Step1 from "./partials/Step1";
 import Step2 from "./partials/Step2";
 import Step3 from "./partials/Step3";
@@ -28,7 +28,7 @@ const SignUpForm = () => {
   }, [state.message]);
 
   return (
-    <form className="w-full" action={formAction}>
+    <form className="w-[350px] mx-auto" action={formAction}>
       <Step1 />
       <Step2 />
       <Step3 />
@@ -36,6 +36,7 @@ const SignUpForm = () => {
         <button
           type="submit"
           className="text-white text-[15px] rounded-3xl py-2 px-4 bg-blue-500 hover:bg-blue-700"
+          disabled={isLoading}
         >
           Sign Up
         </button>

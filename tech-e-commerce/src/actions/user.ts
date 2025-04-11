@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/utils/prisma/prisma";
 import { User } from "@prisma/client";
 
 export const getUserByEmail = async (email: string): Promise<User | null> => {
