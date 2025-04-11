@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/utils/prisma/prisma";
 
 const main = async () => {
   await prisma.product.createMany({

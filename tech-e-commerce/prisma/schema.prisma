@@ -42,11 +42,12 @@ model User {
   password  String
   username  String   @unique
   role      Role     @default(User)
-  avatarUrl String
+  avatarUrl String   @default("/images/Users/DefaultIcon.png")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Order Order[]
+  Order           Order[]
+  ShippingAddress ShippingAddress[]
 }
 
 model Product {
@@ -65,18 +66,28 @@ model Product {
   OrderItem OrderItem[]
 }
 
-model Order {
-  id              String      @id @default(uuid()) @db.Uuid
-  userId          String      @db.Uuid
-  totalAmount     Float
-  status          OrderStatus @default(Pending)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @default(now())
-  shippingAddress String
+model ShippingAddress {
+  id      String @id @default(uuid()) @db.Uuid
+  userId  String @db.Uuid
+  address String
 
-  user      User        @relation(fields: [userId], references: [id])
-  Payment   Payment[]
-  OrderItem OrderItem[]
+  user  User    @relation(fields: [userId], references: [id])
+  Order Order[]
+}
+
+model Order {
+  id                String      @id @default(uuid()) @db.Uuid
+  userId            String      @db.Uuid
+  totalAmount       Float
+  status            OrderStatus @default(Pending)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @default(now())
+  shippingAddressId String      @db.Uuid
+
+  user           User            @relation(fields: [userId], references: [id])
+  shippingAdress ShippingAddress @relation(fields: [shippingAddressId], references: [id])
+  Payment        Payment[]
+  OrderItem      OrderItem[]
 }
 
 model Payment {
