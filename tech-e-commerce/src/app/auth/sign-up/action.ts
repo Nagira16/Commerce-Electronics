@@ -6,22 +6,27 @@ import { uploadFile } from "../../../actions/fileUpload";
 import { getUserByEmail, getUserByUsername } from "../../../actions/user";
 import prisma from "@/utils/prisma/prisma";
 import { AuthResponse } from "@supabase/supabase-js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { createClient } from "@/utils/supabase/server";
 
 export const SignUpWithEmail = async (
-  prevState: any,
+  prevState: FormReturnType<null>,
   formData: FormData
 ): Promise<FormReturnType<null>> => {
   try {
     const supabase = await createClient();
 
-    const username = formData.get("username") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const confirm_password = formData.get("confirm_password") as string;
-    const avatarFile = formData.get("avatarFile") as File;
-    const address = formData.get("address") as string;
+    let username = formData.get("username") as string;
+    let email = formData.get("email") as string;
+    let password = formData.get("password") as string;
+    let confirm_password = formData.get("confirm_password") as string;
+    let avatarFile = formData.get("avatarFile") as File;
+    let address = formData.get("address") as string;
+
+    username.toLocaleLowerCase().trim();
+    email.toLocaleLowerCase().trim();
+    password.toLocaleLowerCase().trim();
+    confirm_password.toLocaleLowerCase().trim();
 
     const usernameExist: User | null = await getUserByUsername(username);
     if (usernameExist) {

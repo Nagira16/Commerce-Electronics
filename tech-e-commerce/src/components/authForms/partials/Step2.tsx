@@ -1,10 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { StepProps } from "@/types";
 import { Eye, EyeClosed, Lock, LockKeyhole } from "lucide-react";
 import React, { useState } from "react";
 
-const Step2 = ({ nextStep, prevStep }: StepProps) => {
+const Step2 = () => {
   const [showPassword1, setShowPassword1] = useState(false);
 
   const [showPassword2, setShowPassword2] = useState(false);

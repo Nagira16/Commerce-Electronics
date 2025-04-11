@@ -1,14 +1,15 @@
 "use client";
 
-import { SignUpWithEmail } from "@/app/auth/sign-up/action";
 import { JSX, useActionState, useEffect } from "react";
-import Step1 from "./partials/Step1";
-import Step2 from "./partials/Step2";
-import Step3 from "./partials/Step3";
 import Swal from "sweetalert2";
+import SignInStep from "./partials/SignInStep";
+import { SignInWithEmail } from "@/app/auth/sign-in/action";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 
-const SignUpForm = (): JSX.Element => {
-  const [state, formAction, isLoading] = useActionState(SignUpWithEmail, {
+const SignInForm = (): JSX.Element => {
+  const router: AppRouterInstance = useRouter();
+  const [state, formAction, isLoading] = useActionState(SignInWithEmail, {
     success: false,
     message: "",
     result: null,
@@ -24,14 +25,14 @@ const SignUpForm = (): JSX.Element => {
         showConfirmButton: false,
         timer: 3000,
       });
+
+      if (state.success) router.push("/");
     }
   }, [state.message]);
 
   return (
     <form className="w-[350px] mx-auto" action={formAction}>
-      <Step1 />
-      <Step2 />
-      <Step3 />
+      <SignInStep />
       <div className="mt-10 flex justify-end">
         <button
           type="submit"
@@ -45,4 +46,4 @@ const SignUpForm = (): JSX.Element => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;
