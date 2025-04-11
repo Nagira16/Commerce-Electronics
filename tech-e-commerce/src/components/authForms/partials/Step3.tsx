@@ -1,10 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { StepProps } from "@/types";
 import { Image, MapPinHouse } from "lucide-react";
 import React from "react";
 
-const Step3 = ({ prevStep }: StepProps) => {
+const Step3 = () => {
   return (
     <article className="space-y-10">
       <div className="flex justify-center items-center gap-2">
